@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registros de Enfermería · Grupo Saint Luke's</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--tx:#14213d;--mu:#5b6779;--nv:#0b2545;--gd:#c9a227;--bd:#d9dfe8;--ok:#1a7f4b;--wr:#a45a06;--er:#b42318;--pri:#0b2545;--prit:#fff;--chip:#eef1f6}
+@media (prefers-color-scheme:dark){:root{--bg:#0a1220;--card:#121c30;--tx:#e8edf5;--mu:#9aa6b8;--bd:#26344e;--ok:#4cc58a;--wr:#f0a04b;--er:#ff7a6e;--pri:#c9a227;--prit:#0b2545;--chip:#1a2640}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--nv);color:#fff;padding:12px 16px;border-bottom:3px solid var(--gd)}
+header .in{max-width:760px;margin:auto;display:flex;align-items:center;gap:12px}
+header .logo{width:38px;height:38px;border-radius:9px;background:var(--gd);color:var(--nv);display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+header .tt{flex:1;min-width:0}
+h1{font-size:18px;margin:0;line-height:1.2}
+header small{color:#d6c27a;font-size:12.5px}
+#who{font-size:12px;text-align:right;color:#fff;line-height:1.25}
+#who span{display:block;color:#d6c27a}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;max-width:792px;margin:auto}
+.tabs button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 13px;border-radius:20px;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--nv);color:#fff;border-color:var(--gd);box-shadow:inset 0 -3px 0 var(--gd)}
+main{padding:0 16px 24px;max-width:792px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:10px 0}
+h2{font-size:16px;margin:0 0 10px}
+.gd{color:var(--gd)}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (min-width:640px){.g{grid-template-columns:1fr 1fr 1fr}}
+.full{grid-column:1/-1}
+label{display:block;font-size:12.5px;color:var(--mu);margin-bottom:3px}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;font-size:15px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gd);border-color:var(--gd)}
+input:invalid:not(:placeholder-shown){border-color:var(--er)}
+.ck{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px;color:var(--tx);margin:0;cursor:pointer}
+.ck input{width:20px;height:20px;flex:none;accent-color:var(--nv)}
+.btn{border:0;background:var(--pri);color:var(--prit);padding:11px 16px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
+.btn[disabled]{opacity:.55;cursor:wait}
+.btn.s{background:var(--card);color:var(--tx);border:1px solid var(--bd);font-weight:500;padding:8px 12px;font-size:13px}
+.btn.d{background:var(--card);color:var(--er);border:1px solid var(--er);font-weight:500;padding:8px 12px;font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.stats{display:flex;gap:8px;overflow-x:auto}
+.stat{flex:none;min-width:92px;text-align:center;padding:8px;border:1px solid var(--bd);border-radius:10px;background:var(--card);cursor:pointer;color:var(--tx);font:inherit}
+.stat.on{border-color:var(--gd);box-shadow:inset 0 -3px 0 var(--gd)}
+.stat b{display:block;font-size:20px}
+.stat .al{display:block;font-size:11.5px;color:var(--er);min-height:15px}
+.stat small{color:var(--mu)}
+.filt{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;margin-bottom:6px}
+.rec{padding:10px 0;border-bottom:1px solid var(--bd);font-size:13.5px}
+.rec:last-child{border-bottom:0}
+.rec.an{opacity:.6}.rec.an .nm{text-decoration:line-through}
+.tag{font-size:11.5px;padding:2px 7px;border-radius:10px;background:var(--chip);border:1px solid var(--bd);margin:3px 4px 0 0;display:inline-block}
+.tag.ok{color:var(--ok);border-color:var(--ok)}
+.tag.no{color:var(--wr);border-color:var(--wr)}
+.tag.er{color:#fff;background:var(--er);border-color:var(--er);font-weight:600}
+.tag.calc{border-style:dashed}
+.tri-Rojo{background:#c62828!important;color:#fff!important}.tri-Naranja{background:#ef6c00!important;color:#fff!important}.tri-Amarillo{background:#f9c80e!important;color:#222!important}.tri-Verde{background:#2e7d32!important;color:#fff!important}.tri-Azul{background:#1565c0!important;color:#fff!important}
+.mu{color:var(--mu)}
+.ra{display:flex;gap:6px;margin-top:6px}
+.ra button{font-size:12.5px;padding:5px 10px}
+.edit-bar{display:none;background:var(--gd);color:var(--nv);padding:8px 12px;border-radius:8px;margin-bottom:10px;font-size:13.5px;font-weight:600}
+.editing .edit-bar{display:block}
+.me{font-size:13px;color:var(--mu);margin:-4px 0 10px}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(140px);background:var(--nv);color:#fff;border:1px solid var(--gd);padding:10px 16px;border-radius:10px;font-size:14px;transition:transform .25s;z-index:20;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.err{background:var(--er);border-color:var(--er)}
+#cover{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:30;padding:24px;text-align:center}
+#cover .box{max-width:420px}
+.spin{width:34px;height:34px;border:4px solid var(--bd);border-top-color:var(--gd);border-radius:50%;animation:sp 1s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);max-width:420px;width:92vw;padding:16px}
+dialog::backdrop{background:rgba(5,12,25,.55)}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:8px 16px 24px}
+.printhead,.sign{display:none}
+@media print{
+ body{background:#fff;color:#000;font-size:11.5px}
+ header,.tabs,form,.noprint,footer,#toast{display:none!important}
+ .printhead{display:block;border-bottom:2px solid #0b2545;margin-bottom:8px;padding-bottom:6px}
+ .printhead b{font-size:15px;color:#0b2545}
+ .card{border:0;padding:0;margin:0}
+ .rec{break-inside:avoid}
+ .tag{border:1px solid #999;background:#fff!important;color:#000!important}
+ .tag.er{border:1.5px solid #000;font-weight:700}
+ .sign{display:flex;gap:40px;margin-top:40px}
+ .sign div{flex:1;border-top:1px solid #000;text-align:center;padding-top:4px}
+}
+</style></head><body>
+<div id="cover"><div class="box"><div class="spin" id="spin"></div><div id="covermsg">Cargando…</div></div></div>
+
+<header><div class="in"><div class="logo">SL</div><div class="tt"><h1>Registros de Enfermería</h1><small id="inst">Grupo Saint Luke's Hospitals</small></div><div id="who"></div></div></header>
+<nav class="tabs" id="tabs" aria-label="Áreas"></nav>
+<main>
+<div class="card noprint"><div class="stats" id="stats"></div><div class="mu" style="font-size:12px;margin-top:6px">Registros vigentes de hoy por área · en rojo, los que tienen alertas</div></div>
+
+<form class="card" id="f" autocomplete="off">
+ <div class="edit-bar" id="eb"></div>
+ <h2 id="ft"></h2>
+ <div class="me" id="me"></div>
+ <div class="g" id="fields"></div>
+ <h2 style="margin-top:16px">Checklist de seguridad</h2>
+ <div id="ck"></div>
+ <div class="row"><button class="btn" type="submit" id="sb">Guardar registro</button><button class="btn s" type="button" id="cancel" hidden>Cancelar corrección</button><button class="btn s" type="button" id="limpiar">Limpiar formulario</button></div>
+</form>
+
+<div class="card">
+ <div class="printhead" id="ph"></div>
+ <h2>Registros · <span class="gd" id="lt"></span></h2>
+ <div class="filt noprint">
+  <div><label for="fp">Periodo</label><select id="fp"><option value="hoy">Hoy</option><option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="todo">Todo</option></select></div>
+  <div><label for="fturn">Turno</label><select id="fturn"><option value="">Todos</option><option>Matutino</option><option>Vespertino</option><option>Nocturno</option></select></div>
+  <div><label for="fq">Buscar paciente, cama o quién capturó</label><input id="fq" type="search" placeholder="Iniciales, folio…"></div>
+ </div>
+ <div class="mu noprint" id="cnt" style="font-size:12.5px"></div>
+ <div id="list"></div>
+ <div class="sign"><div>Elaboró</div><div>Revisó (Jefatura de Enfermería)</div></div>
+ <div class="row noprint">
+  <button class="btn s" type="button" id="ref">Actualizar</button>
+  <button class="btn s" type="button" id="csv">Exportar CSV</button>
+  <button class="btn s" type="button" id="prn">Imprimir</button>
+ </div>
+</div>
+
+<div class="card noprint" id="admin" hidden>
+ <h2>Administración</h2>
+ <div class="mu" style="font-size:13px">Las altas de personal, roles y áreas se hacen en la pestaña <b>Usuarios</b> de la hoja de cálculo. Cada alta, corrección y anulación queda en la pestaña <b>Bitácora</b>.</div>
+ <div class="row">
+  <a class="btn s" id="sheet" href="#" target="_blank" rel="noopener" style="text-decoration:none">Abrir hoja de cálculo</a>
+  <button class="btn s" type="button" id="imp">Importar respaldo del prototipo (.json)</button>
+  <input type="file" id="impf" accept=".json,application/json" hidden>
+ </div>
+</div>
+</main>
+<footer>Creado por RHINOBUILD · v3.0</footer>
+
+<dialog id="dlg"><form method="dialog">
+ <h2>Anular registro</h2>
+ <p class="mu" style="font-size:13px;margin:0 0 10px" id="dtx"></p>
+ <label for="dm">Motivo de anulación</label><textarea id="dm" rows="3" required minlength="5"></textarea>
+ <div class="row"><button class="btn" value="ok" id="dok">Anular</button><button class="btn s" value="cancel" formnovalidate>Cancelar</button></div>
+</form></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+var U=null,AR=[],AD={},cur=null,drafts={},editing=null,REC=[],LIM=false,busy=false,seq=0;
+var $=function(id){return document.getElementById(id)};
+var F=$('f');
+
+/* ---------- Comunicación con Apps Script ---------- */
+function call(fn){var args=[].slice.call(arguments,1);return new Promise(function(ok,ko){
+ google.script.run.withSuccessHandler(ok).withFailureHandler(function(e){ko(e&&e.message?e:new Error(String(e)))})[fn].apply(null,args)})}
+function msg(e){var m=(e&&e.message)||String(e);return m.replace(/^Exception:\s*/,'').replace(/^Error:\s*/,'')}
+
+/* ---------- Utilidades ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function fdate(iso){if(!iso)return'—';var d=new Date(iso);return isNaN(d)?iso:d.toLocaleString('es-MX',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function turnoAuto(){var h=new Date().getHours();return h>=7&&h<14?'Matutino':h>=14&&h<21?'Vespertino':'Nocturno'}
+var tt;function toast(m,err){var t=$('toast');t.textContent=m;t.className='show'+(err?' err':'');clearTimeout(tt);tt=setTimeout(function(){t.className=err?'err':''},err?6000:3000)}
+function pref(k,v){try{if(v===undefined)return localStorage.getItem('enf3_'+k);localStorage.setItem('enf3_'+k,v)}catch(e){return null}}
+function download(name,content,type){var u=URL.createObjectURL(new Blob([content],{type:type})),l=document.createElement('a');l.href=u;l.download=name;l.target='_blank';document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)}
+function stamp(){var d=new Date(),p=function(n){return('0'+n).slice(-2)};return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes())}
+function ckCount(a,r){return a.c.filter(function(c){return r.k&&r.k[c]}).length}
+function fatal(e){$('spin').style.display='none';$('covermsg').innerHTML='<h2>No se pudo abrir</h2><p>'+esc(msg(e))+'</p><button class="btn s" onclick="location.reload()">Reintentar</button>';$('cover').style.display='grid'}
+
+/* ---------- Pestañas y resumen ---------- */
+function tabs(){$('tabs').innerHTML=AR.map(function(a){return'<button type="button" class="'+(a.k===cur?'on':'')+'" data-k="'+a.k+'">'+esc(a.n)+'</button>'}).join('')}
+var RES={};
+function stats(res){if(res)RES=res;$('stats').innerHTML=AR.map(function(a){var r=RES[a.k]||{hoy:0,alertas:0};
+ return'<button type="button" class="stat'+(a.k===cur?' on':'')+'" data-k="'+a.k+'"><b>'+r.hoy+'</b><small>'+esc(a.n)+'</small><span class="al">'+(r.alertas?r.alertas+' con alerta':'')+'</span></button>'}).join('')}
+function refreshStats(){call('api_resumen').then(stats).catch(function(){})}
+function go(k){if(!AD[k]||k===cur)return;if(editing){if(!confirm('Hay una corrección sin guardar. ¿Descartarla?'))return;stopEdit(true)}else drafts[cur]=snap();
+ cur=k;pref('area',k);form();fill(drafts[cur]||defaults());tabs();stats();listar();window.scrollTo(0,0)}
+$('tabs').onclick=$('stats').onclick=function(e){var b=e.target.closest('[data-k]');if(b)go(b.dataset.k)};
+
+/* ---------- Formulario ---------- */
+function form(){var a=AD[cur];$('ft').innerHTML='Nuevo registro · <span class="gd">'+esc(a.n)+'</span>';$('me').textContent='Capturando como '+U.nombre+' ('+U.email+')';
+ var h='<div><label for="i_p">Paciente (iniciales o folio)</label><input id="i_p" name="_p" required maxlength="40" placeholder="Ej. JPR o F-0123"></div>'+
+  '<div><label for="i_c">Cama / sala</label><input id="i_c" name="_c" maxlength="20" placeholder=" "></div>'+
+  '<div><label for="i_t">Turno</label><select id="i_t" name="_t"><option>Matutino</option><option>Vespertino</option><option>Nocturno</option></select></div>';
+ a.f.forEach(function(f){var id='i_'+f.k,nm='f_'+f.k,l='<label for="'+id+'">'+esc(f.l)+'</label>';
+  if(f.t==='select')h+='<div>'+l+'<select id="'+id+'" name="'+nm+'"><option value="">—</option>'+f.o.map(function(o){return'<option>'+esc(o)+'</option>'}).join('')+'</select></div>';
+  else if(f.t==='textarea')h+='<div class="full">'+l+'<textarea id="'+id+'" name="'+nm+'" rows="2" maxlength="2000"></textarea></div>';
+  else if(f.t==='ta')h+='<div>'+l+'<input id="'+id+'" name="'+nm+'" inputmode="numeric" pattern="\\d{2,3}/\\d{2,3}" placeholder="120/80" title="Formato: sistólica/diastólica, p. ej. 120/80"></div>';
+  else if(f.t==='number')h+='<div>'+l+'<input id="'+id+'" name="'+nm+'" type="number" inputmode="decimal" step="'+(f.step||'any')+'" min="'+f.min+'" max="'+f.max+'" placeholder="'+f.min+'–'+f.max+'" title="Rango permitido: '+f.min+' a '+f.max+'"></div>';
+  else h+='<div>'+l+'<input id="'+id+'" name="'+nm+'" type="'+(f.t==='time'?'time':'text')+'" maxlength="200" placeholder=" "></div>'});
+ h+='<div class="full"><label for="i_o">Observaciones</label><textarea id="i_o" name="_o" rows="2" maxlength="2000"></textarea></div>';
+ $('fields').innerHTML=h;
+ $('ck').innerHTML=a.c.map(function(c,i){return'<label class="ck"><input type="checkbox" name="k'+i+'"> '+esc(c)+'</label>'}).join('');
+ F.classList.remove('editing');$('sb').textContent='Guardar registro';$('cancel').hidden=true}
+function snap(){var o={};Array.prototype.forEach.call(F.elements,function(el){if(el.name)o[el.name]=el.type==='checkbox'?el.checked:el.value});return o}
+function fill(o){Array.prototype.forEach.call(F.elements,function(el){if(!el.name||!(el.name in o))return;if(el.type==='checkbox')el.checked=!!o[el.name];else el.value=o[el.name]==null?'':o[el.name]})}
+function defaults(){return{_t:turnoAuto()}}
+function findRec(id){return REC.filter(function(r){return r.id===id})[0]}
+
+function startEdit(id){var r=findRec(id),a=AD[cur];if(!r||!r.puedeCorregir)return;if(!editing)drafts[cur]=snap();editing=id;form();
+ var o={_p:r.p,_c:r.c,_t:r.t,_o:r.o};a.f.forEach(function(f){o['f_'+f.k]=r.v[f.k]==null?'':r.v[f.k]});a.c.forEach(function(c,i){o['k'+i]=!!(r.k&&r.k[c])});fill(o);
+ F.classList.add('editing');$('eb').textContent='Corrigiendo el registro de '+r.p+' ('+fdate(r.fecha)+'), capturado por '+r.capturo+'. La corrección queda en la bitácora.';
+ $('ft').innerHTML='Corregir registro · <span class="gd">'+esc(a.n)+'</span>';$('sb').textContent='Guardar corrección';$('cancel').hidden=false;F.scrollIntoView({behavior:'smooth'})}
+function stopEdit(silent){editing=null;form();fill(drafts[cur]||defaults());if(!silent)toast('Corrección cancelada')}
+$('cancel').onclick=function(){stopEdit()};
+$('limpiar').onclick=function(){if(editing){stopEdit();return}drafts[cur]=null;form();fill(defaults())};
+
+F.onsubmit=function(ev){ev.preventDefault();if(busy)return;var o=snap(),a=AD[cur],v={},k={};
+ a.f.forEach(function(f){v[f.k]=String(o['f_'+f.k]||'').trim()});a.c.forEach(function(c,i){k[c]=!!o['k'+i]});
+ var rec={id:editing||'',p:o._p.trim(),c:o._c.trim(),t:o._t,o:o._o.trim(),v:v,k:k},area=cur;
+ busy=true;$('sb').disabled=true;$('sb').textContent='Guardando…';
+ call('api_guardar',area,rec).then(function(res){
+  busy=false;$('sb').disabled=false;
+  if(res.sinCambios){toast('Sin cambios');stopEdit(true);return}
+  var r=res.registro,pend=a.c.length-ckCount(a,r),fue=!!rec.id;
+  editing=null;drafts[area]=null;if(cur===area){form();fill(defaults())}
+  toast(fue?'Corrección guardada':r.alertas.length?'Guardado con '+r.alertas.length+' alerta(s): revisar':pend?'Guardado · checklist incompleto ('+pend+' pendiente/s)':'Registro guardado');
+  listar();refreshStats();if(!fue)window.scrollTo(0,0)})
+ .catch(function(e){busy=false;$('sb').disabled=false;$('sb').textContent=editing?'Guardar corrección':'Guardar registro';toast(msg(e),true)})};
+
+/* ---------- Lista ---------- */
+function filtro(){return{periodo:$('fp').value,turno:$('fturn').value,q:$('fq').value.trim()}}
+function listar(){var my=++seq,area=cur;$('cnt').textContent='Cargando…';
+ call('api_listar',area,filtro()).then(function(r){if(my!==seq)return;REC=r.registros;LIM=r.limitado;render()})
+ .catch(function(e){if(my!==seq)return;$('cnt').textContent='';$('list').innerHTML='<p style="color:var(--er)">'+esc(msg(e))+'</p>'})}
+function recHTML(r){var a=AD[cur],ok=ckCount(a,r),tot=a.c.length,anul=r.estado==='Anulado',h='';
+ h+='<div class="rec'+(anul?' an':'')+'"><b class="nm">'+esc(r.p)+'</b> · cama '+esc(r.c||'—')+' <span class="mu">'+esc(r.t)+' · '+esc(fdate(r.fecha))+'</span><br>';
+ if(anul)h+='<span class="tag er">ANULADO</span> ';
+ if(r.v.triage)h+='<span class="tag tri-'+esc(r.v.triage)+'">Triage '+esc(r.v.triage)+'</span>';
+ h+='<span class="tag '+(ok===tot?'ok':'no')+'">Checklist '+ok+'/'+tot+'</span>';
+ r.alertas.forEach(function(x){h+='<span class="tag er">⚠ '+esc(x)+'</span>'});
+ a.f.forEach(function(f){var x=r.v[f.k];if(x!==''&&x!=null&&f.k!=='triage')h+='<span class="tag">'+esc(f.l)+': '+esc(x)+'</span>'});
+ r.calc.forEach(function(c){h+='<span class="tag calc">'+esc(c[0])+': '+esc(c[1])+'</span>'});
+ if(ok<tot)h+='<br><span class="mu" style="font-size:12px">Pendiente: '+esc(a.c.filter(function(c){return!(r.k&&r.k[c])}).join(' · '))+'</span>';
+ if(r.o)h+='<br><span class="mu">'+esc(r.o)+'</span>';
+ h+='<br><small class="mu">Capturó '+esc(r.capturo);
+ if(r.version>1)h+=' · corregido (versión '+r.version+', último: '+esc(r.corrPor)+', '+esc(fdate(r.ultCorr))+')';
+ h+='</small>';
+ if(anul)h+='<br><small style="color:var(--er)">Anulado por '+esc(r.anulPor)+' el '+esc(fdate(r.anulFecha))+': '+esc(r.anulMotivo)+'</small>';
+ if(r.puedeCorregir||r.puedeAnular){h+='<div class="ra noprint">';
+  if(r.puedeCorregir)h+='<button type="button" class="btn s" data-a="edit" data-id="'+esc(r.id)+'">Corregir</button>';
+  if(r.puedeAnular)h+='<button type="button" class="btn d" data-a="anul" data-id="'+esc(r.id)+'">Anular</button>';
+  h+='</div>'}
+ return h+'</div>'}
+function render(){var a=AD[cur];$('lt').textContent=a.n;
+ $('cnt').textContent=REC.length+' registro(s)'+(LIM?' · se muestran los '+REC.length+' más recientes; acota el periodo':'');
+ $('list').innerHTML=REC.length?REC.map(recHTML).join(''):'<p class="mu">Sin registros con estos filtros.</p>';
+ var tu=$('fturn').value;
+ $('ph').innerHTML='<b>'+esc($('inst').textContent)+' · Registros de Enfermería</b><br>Área: '+esc(a.n)+' · Periodo: '+esc($('fp').options[$('fp').selectedIndex].text)+(tu?' · Turno: '+esc(tu):'')+' · Impreso por '+esc(U.nombre)+' el '+esc(new Date().toLocaleString('es-MX'))}
+$('fp').onchange=$('fturn').onchange=listar;
+var qt;$('fq').oninput=function(){clearTimeout(qt);qt=setTimeout(listar,400)};
+$('ref').onclick=function(){listar();refreshStats()};
+$('list').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;if(b.dataset.a==='edit')startEdit(b.dataset.id);else openAnul(b.dataset.id)};
+
+/* ---------- Anulación ---------- */
+var anulId=null,dlg=$('dlg');
+function openAnul(id){var r=findRec(id);if(!r)return;anulId=id;$('dtx').textContent=r.p+' · '+fdate(r.fecha)+'. El registro no se borra: queda marcado como anulado, con el motivo, en la hoja y en la bitácora.';$('dm').value='';
+ if(dlg.showModal)dlg.showModal();else{var m=prompt('Motivo de anulación:');if(m)doAnul(m)}}
+dlg.addEventListener('close',function(){if(dlg.returnValue==='ok'&&anulId)doAnul($('dm').value.trim());anulId=null});
+function doAnul(m){var id=anulId,area=cur;call('api_anular',area,id,m).then(function(){toast('Registro anulado');listar();refreshStats()}).catch(function(e){toast(msg(e),true)})}
+
+/* ---------- CSV / imprimir ---------- */
+function cell(c){var s=String(c==null?'':c);if(/^[=+\-@\t\r]/.test(s)&&!/^-?\d+(\.\d+)?$/.test(s))s="'"+s;return'"'+s.replace(/"/g,'""')+'"'}
+$('csv').onclick=function(){var a=AD[cur],r=REC;if(!r.length){toast('No hay registros para exportar con estos filtros');return}
+ var calcL=[];r.forEach(function(x){x.calc.forEach(function(c){if(calcL.indexOf(c[0])<0)calcL.push(c[0])})});
+ var out=[['ID','Fecha','Turno','Paciente','Cama','Capturó'].concat(a.f.map(function(f){return f.l}),calcL,a.c,['Checklist completo','Alertas','Observaciones','Estado','Versión','Motivo anulación'])];
+ r.forEach(function(x){var cv={};x.calc.forEach(function(c){cv[c[0]]=c[1]});
+  out.push([x.id,fdate(x.fecha),x.t,x.p,x.c,x.capturo].concat(a.f.map(function(f){return x.v[f.k]}),calcL.map(function(l){return cv[l]==null?'':cv[l]}),a.c.map(function(c){return x.k[c]?'Sí':'No'}),
+   [ckCount(a,x)===a.c.length?'Sí':'No',x.alertas.join(' | '),x.o,x.estado,x.version,x.anulMotivo]))});
+ download('enfermeria_'+cur+'_'+stamp()+'.csv','﻿'+out.map(function(l){return l.map(cell).join(',')}).join('\r\n'),'text/csv;charset=utf-8');toast('CSV exportado ('+r.length+' registros)')};
+$('prn').onclick=function(){render();window.print()};
+
+/* ---------- Admin ---------- */
+$('imp').onclick=function(){$('impf').click()};
+$('impf').onchange=function(){var f=this.files[0];this.value='';if(!f)return;var rd=new FileReader();
+ rd.onload=function(){toast('Importando…');call('api_importar',String(rd.result)).then(function(r){
+   toast('Importados: '+r.importados+' · ya existían: '+r.omitidos+(r.errores.length?' · con error: '+r.errores.length:''),r.errores.length>0);
+   if(r.errores.length)console.warn(r.errores.join('\n'));listar();refreshStats()}).catch(function(e){toast(msg(e),true)})};
+ rd.readAsText(f)};
+
+/* ---------- Inicio ---------- */
+call('api_inicio').then(function(r){U=r.usuario;AR=r.areas;AR.forEach(function(a){AD[a.k]=a});
+ var p=pref('area');cur=AD[p]?p:AR[0].k;$('inst').textContent=r.institucion;
+ $('who').innerHTML=esc(U.nombre)+'<span>'+esc(U.rol)+'</span>';
+ if(U.rol==='Admin'){$('admin').hidden=false;$('sheet').href=r.hoja}
+ tabs();stats(r.resumen);form();fill(defaults());listar();$('cover').style.display='none'})
+.catch(fatal);
+})();
+</script></body></html>

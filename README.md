@@ -1,6 +1,17 @@
-# Registros de Enfermería · Grupo Saint Luke's (prototipo)
+# Registros de Enfermería · Grupo Saint Luke's
 
 Bitácoras y checklists de seguridad por área: **UCI, UCIN, Quirófano, Hemodinamia, Hemodiálisis, Urgencias y Esterilización (CEYE)**.
+
+Este repositorio tiene dos versiones:
+
+| Versión | Dónde | Para qué |
+|---|---|---|
+| **Institucional (v3)** | carpeta [`apps-script/`](apps-script/) | Uso real: cada quien entra con su cuenta de Google, datos en Google Sheets, roles y bitácora. Ver la [guía de despliegue](apps-script/README.md). |
+| **Prototipo (v2)** | `index.html` · [rhinobuild.github.io/registros_enfermeria_slh](https://rhinobuild.github.io/registros_enfermeria_slh/) | Demostración y capacitación. Los datos se quedan en el navegador. |
+
+---
+
+## Prototipo (v2)
 
 - Un solo archivo: `index.html` (sin dependencias, funciona en celular y computadora).
 - Los datos se guardan **solo en el navegador** del equipo donde se capturan (localStorage).
@@ -53,7 +64,7 @@ Los umbrales están en `index.html`, en la definición de cada área (`num(clave
 ## Limitaciones (prototipo)
 - Sin inicio de sesión: el nombre del enfermero/a es texto libre.
 - Cada navegador tiene sus propios datos; en equipos compartidos cualquiera que lo abra los ve.
-- Para uso real se recomienda migrar a un backend con autenticación (p. ej. Google Apps Script + Sheets) con bitácora de auditoría y conservación conforme a NOM-004.
+- Para uso real, usa la versión institucional de [`apps-script/`](apps-script/). Los respaldos `.json` del prototipo se pueden importar ahí.
 
 ---
 Creado por RHINOBUILD
