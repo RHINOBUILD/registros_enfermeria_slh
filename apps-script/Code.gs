@@ -238,7 +238,7 @@ function api_inicio() {
     usuario: u,
     areas: u.areas.map(function (k) {
       var a = AREAS[k];
-      return { k: k, n: a.n, c: a.c, f: a.f.map(function (f) { return { k: f.k, l: f.l, t: f.t, o: f.o || null, min: f.min, max: f.max, step: f.step || null }; }) };
+      return { k: k, n: a.n, c: a.c, f: a.f.map(function (f) { return { k: f.k, l: f.l, t: f.t, o: f.o || null, min: f.min, max: f.max, step: f.step || null, lo: f.lo == null ? null : f.lo, hi: f.hi == null ? null : f.hi, bad: f.bad || [] }; }) };
     }),
     resumen: api_resumen_(u),
     institucion: CONFIG.INSTITUCION,
