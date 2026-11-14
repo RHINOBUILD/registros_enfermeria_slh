@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b2545">
+<title>Registros de Enfermería · Grupo Saint Luke's</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--tx:#14213d;--mu:#5b6779;--nv:#0b2545;--nv2:#13315c;--gd:#c9a227;--bd:#d9dfe8;--ok:#1a7f4b;--wr:#a45a06;--er:#b42318;--pri:#0b2545;--prit:#fff;--chip:#eef1f6}
+@media (prefers-color-scheme:dark){:root{--bg:#0a1220;--card:#121c30;--tx:#e8edf5;--mu:#9aa6b8;--bd:#26344e;--ok:#4cc58a;--wr:#f0a04b;--er:#ff7a6e;--pri:#c9a227;--prit:#0b2545;--chip:#1a2640}}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom,0)}
+header{background:var(--nv);color:#fff;padding:calc(12px + env(safe-area-inset-top,0)) 16px 12px;border-bottom:3px solid var(--gd)}
+header .in{max-width:760px;margin:auto;display:flex;align-items:center;gap:12px}
+header .logo{width:38px;height:38px;border-radius:9px;background:var(--gd);color:var(--nv);display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+h1{font-size:18px;margin:0;line-height:1.2}
+header small{color:#d6c27a;font-size:12.5px}
+.warn{max-width:760px;margin:10px auto 0;padding:8px 12px;border-radius:8px;background:var(--card);border:1px solid var(--wr);color:var(--wr);font-size:12.5px}
+.wrapw{padding:0 16px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;max-width:792px;margin:auto;-webkit-overflow-scrolling:touch}
+.tabs button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 13px;border-radius:20px;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--nv);color:#fff;border-color:var(--gd);box-shadow:inset 0 -3px 0 var(--gd)}
+main{padding:0 16px 24px;max-width:792px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:10px 0}
+h2{font-size:16px;margin:0 0 10px;color:var(--tx)}
+h2 .gd{color:var(--gd)}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (min-width:640px){.g{grid-template-columns:1fr 1fr 1fr}}
+.full{grid-column:1/-1}
+label{display:block;font-size:12.5px;color:var(--mu);margin-bottom:3px}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;font-size:15px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gd);outline-offset:0;border-color:var(--gd)}
+input:invalid:not(:placeholder-shown){border-color:var(--er)}
+.ck{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px;color:var(--tx);margin:0;cursor:pointer}
+.ck input{width:20px;height:20px;flex:none;accent-color:var(--nv)}
+.btn{border:0;background:var(--pri);color:var(--prit);padding:11px 16px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
+.btn.s{background:var(--card);color:var(--tx);border:1px solid var(--bd);font-weight:500;padding:8px 12px;font-size:13px}
+.btn.d{background:var(--card);color:var(--er);border:1px solid var(--er);font-weight:500;padding:8px 12px;font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.stats{display:flex;gap:8px;overflow-x:auto}
+.stat{flex:none;min-width:92px;text-align:center;padding:8px;border:1px solid var(--bd);border-radius:10px;background:var(--card);cursor:pointer;color:var(--tx);font:inherit}
+.stat.on{border-color:var(--gd);box-shadow:inset 0 -3px 0 var(--gd)}
+.stat b{display:block;font-size:20px;color:var(--tx)}
+.stat .al{display:block;font-size:11.5px;color:var(--er);min-height:15px}
+.stat small{color:var(--mu)}
+.filt{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;margin-bottom:6px}
+.rec{padding:10px 0;border-bottom:1px solid var(--bd);font-size:13.5px}
+.rec:last-child{border-bottom:0}
+.rec.an{opacity:.6}.rec.an .nm{text-decoration:line-through}
+.tag{font-size:11.5px;padding:2px 7px;border-radius:10px;background:var(--chip);border:1px solid var(--bd);margin:3px 4px 0 0;display:inline-block}
+.tag.ok{color:var(--ok);border-color:var(--ok)}
+.tag.no{color:var(--wr);border-color:var(--wr)}
+.tag.er{color:#fff;background:var(--er);border-color:var(--er);font-weight:600}
+.tag.calc{border-style:dashed}
+.tri-Rojo{background:#c62828!important;color:#fff!important}.tri-Naranja{background:#ef6c00!important;color:#fff!important}.tri-Amarillo{background:#f9c80e!important;color:#222!important}.tri-Verde{background:#2e7d32!important;color:#fff!important}.tri-Azul{background:#1565c0!important;color:#fff!important}
+.mu{color:var(--mu)}
+.ra{display:flex;gap:6px;margin-top:6px}
+.ra button{font-size:12.5px;padding:5px 10px}
+.edit-bar{display:none;background:var(--gd);color:var(--nv);padding:8px 12px;border-radius:8px;margin-bottom:10px;font-size:13.5px;font-weight:600}
+.editing .edit-bar{display:block}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0));transform:translateX(-50%) translateY(120px);background:var(--nv);color:#fff;border:1px solid var(--gd);padding:10px 16px;border-radius:10px;font-size:14px;transition:transform .25s;z-index:20;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);max-width:420px;width:92vw;padding:16px}
+dialog::backdrop{background:rgba(5,12,25,.55)}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:8px 16px 24px}
+.printhead,.sign{display:none}
+@media print{
+ body{background:#fff;color:#000;font-size:11.5px}
+ header,.tabs,.warn,form,.noprint,footer,#toast{display:none!important}
+ .printhead{display:block;border-bottom:2px solid #0b2545;margin-bottom:8px;padding-bottom:6px}
+ .printhead b{font-size:15px;color:#0b2545}
+ .card{border:0;padding:0;margin:0}
+ .rec{break-inside:avoid}
+ .tag{border:1px solid #999;background:#fff!important;color:#000!important}
+ .tag.er{border:1.5px solid #000;font-weight:700}
+ .sign{display:flex;gap:40px;margin-top:40px}
+ .sign div{flex:1;border-top:1px solid #000;text-align:center;padding-top:4px}
+}
+</style></head><body>
+<header><div class="in"><div class="logo">SL</div><div><h1>Registros de Enfermería</h1><small>Grupo Saint Luke's Hospitals · bitácoras y checklists por área</small></div></div></header>
+<div class="wrapw"><div class="warn">Prototipo: no captures datos reales de pacientes. Usa solo iniciales o un folio ficticio. Los datos se guardan únicamente en este navegador; respáldalos con frecuencia.</div></div>
+<nav class="tabs" id="tabs" aria-label="Áreas"></nav>
+<main>
+<div class="card noprint"><div class="stats" id="stats"></div><div class="mu" style="font-size:12px;margin-top:6px">Registros de hoy por área · en rojo, registros con alertas</div></div>
+
+<form class="card" id="f" autocomplete="off">
+ <div class="edit-bar" id="eb"></div>
+ <h2 id="ft"></h2>
+ <div class="g" id="fields"></div>
+ <h2 style="margin-top:16px">Checklist de seguridad</h2>
+ <div id="ck"></div>
+ <div class="row"><button class="btn" type="submit" id="sb">Guardar registro</button><button class="btn s" type="button" id="cancel" hidden>Cancelar edición</button><button class="btn s" type="button" id="limpiar">Limpiar formulario</button></div>
+</form>
+
+<div class="card" id="listcard">
+ <div class="printhead" id="ph"></div>
+ <h2>Registros guardados · <span class="gd" id="lt"></span></h2>
+ <div class="filt noprint">
+  <div><label for="fp">Periodo</label><select id="fp"><option value="hoy">Hoy</option><option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="todo">Todo</option></select></div>
+  <div><label for="fturn">Turno</label><select id="fturn"><option value="">Todos</option><option>Matutino</option><option>Vespertino</option><option>Nocturno</option></select></div>
+  <div><label for="fq">Buscar paciente, cama o enfermero/a</label><input id="fq" type="search" placeholder="Iniciales, folio…"></div>
+ </div>
+ <div class="mu noprint" id="cnt" style="font-size:12.5px"></div>
+ <div id="list"></div>
+ <div class="sign"><div>Elaboró</div><div>Revisó (Jefatura de Enfermería)</div></div>
+ <div class="row noprint">
+  <button class="btn s" type="button" id="csv">Exportar CSV</button>
+  <button class="btn s" type="button" id="prn">Imprimir</button>
+ </div>
+</div>
+
+<div class="card noprint">
+ <h2>Respaldo</h2>
+ <div class="mu" style="font-size:13px">Descarga un respaldo de todas las áreas para no perder información si se borra el navegador. También sirve para pasar los registros a otro equipo.</div>
+ <div class="row">
+  <button class="btn s" type="button" id="bk">Descargar respaldo (.json)</button>
+  <button class="btn s" type="button" id="imp">Importar respaldo</button>
+  <input type="file" id="impf" accept=".json,application/json" hidden>
+  <button class="btn d" type="button" id="clr">Borrar área…</button>
+ </div>
+</div>
+</main>
+<footer>Creado por RHINOBUILD · v2.0</footer>
+
+<dialog id="dlg"><form method="dialog" id="df">
+ <h2>Anular registro</h2>
+ <p class="mu" style="font-size:13px;margin:0 0 10px" id="dtx"></p>
+ <label for="dm">Motivo de anulación</label><textarea id="dm" rows="3" required></textarea>
+ <label for="dp" style="margin-top:8px">Anula (nombre)</label><input id="dp" required>
+ <div class="row"><button class="btn" value="ok" id="dok">Anular</button><button class="btn s" value="cancel" formnovalidate>Cancelar</button></div>
+</form></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+/* ---------- Definición de áreas ---------- */
+var NIV=['Ninguno','Bajo','Medio','Alto'];
+// lo/hi: genera alerta si el valor es < lo o > hi
+function num(k,l,min,max,lo,hi,step){return{k:k,l:l,t:'number',min:min,max:max,lo:lo,hi:hi,step:step||'any'}}
+function sel(k,l,o,bad){return{k:k,l:l,t:'select',o:o,bad:bad||[]}}
+function txt(k,l){return{k:k,l:l,t:'text'}}
+function ta(k,l){return{k:k,l:l,t:'ta'}}
+function tm(k,l){return{k:k,l:l,t:'time'}}
+function area(k,l){return{k:k,l:l,t:'textarea'}}
+function dur(i,f){if(!i||!f)return'';var a=i.split(':'),b=f.split(':'),m=(+b[0]*60+ +b[1])-(+a[0]*60+ +a[1]);if(m<0)m+=1440;return Math.floor(m/60)+' h '+('0'+(m%60)).slice(-2)+' min'}
+
+var A={
+uci:{n:'UCI',f:[num('fc','FC (lpm)',20,250,50,120,1),ta('ta','TA (mmHg)'),num('spo2','SpO₂ (%)',0,100,90,null,1),num('temp','Temp (°C)',30,45,35.5,38.2),num('gcs','Glasgow',3,15,9,null,1),sel('vent','Ventilación',['Ninguna','Puntas nasales','VMNI','VMI']),num('bal','Balance de líquidos (ml)',-20000,20000),num('braden','Braden',6,23,13,null,1),sel('caidas','Riesgo de caídas',NIV,['Alto']),num('rass','Sedación (RASS)',-5,4,null,null,1),num('glu','Glucosa capilar (mg/dL)',10,1000,70,180,1),num('dolor','Dolor (0-10)',0,10,null,6,1)],
+ v1:['fc','ta','spo2','temp','gcs','vent','bal','braden','caidas','rass'],
+ c:['Cabecera elevada 30°','Higiene de manos','Cuidados de catéteres y sondas','Prevención de úlceras (cambios de posición)','Alarmas de monitor verificadas','Medicamentos de alto riesgo doble verificación']},
+ucin:{n:'UCIN',f:[num('peso','Peso (g)',300,6000,null,null,1),num('eg','Edad gestacional (sem)',22,44),num('fc','FC (lpm)',60,250,100,180,1),num('fr','FR (rpm)',10,120,30,60,1),num('spo2','SpO₂ (%)',0,100,90,null,1),num('tinc','Temp incubadora (°C)',20,40),num('tax','Temp axilar (°C)',33,42,36.5,37.5),sel('alim','Alimentación',['Ayuno','Sonda','Succión','Mixta']),sel('foto','Fototerapia',['No','Sí']),num('diur','Diuresis (ml/kg/h)',0,20,1,null),num('glu','Glucemia capilar (mg/dL)',10,500,45,150,1)],
+ v1:['peso','eg','fc','fr','spo2','tinc','alim','foto','diur'],
+ c:['Identificación del recién nacido','Higiene de manos','Incubadora y alarmas revisadas','Cálculo de dosis por peso verificado','Cuidado de piel y cordón','Registro de lactancia o fórmula']},
+quir:{n:'Quirófano',f:[txt('cx','Cirugía'),txt('cir','Cirujano'),sel('anes','Anestesia',['General','Regional','Local','Sedación']),tm('ini','Hora inicio'),tm('fin','Hora fin'),sel('gasas','Conteo de gasas',['Correcto','Incorrecto'],['Incorrecto']),sel('inst','Conteo de instrumental',['Correcto','Incorrecto'],['Incorrecto']),num('sang','Sangrado (ml)',0,20000,null,1000,1),sel('muestras','Muestras patológicas',['No','Sí'])],
+ v1:['cx','cir','anes','ini','fin','gasas','inst','sang','muestras'],
+ calc:function(v){var d=dur(v.ini,v.fin);return d?[['Duración',d]]:[]},
+ c:['Identidad y consentimiento verificados','Sitio quirúrgico marcado','Profilaxis antibiótica en tiempo','Pausa quirúrgica (lista OMS)','Conteo final de material','Posición y puntos de presión protegidos']},
+hemo:{n:'Hemodinamia',f:[txt('proc','Procedimiento'),sel('acceso','Acceso',['Radial','Femoral','Otro']),num('contraste','Contraste (ml)',0,2000,null,null,1),num('hep','Heparina (UI)',0,50000,null,null,1),num('tca','TCA (s)',0,1000,null,null,1),area('mat','Material usado / lote'),num('rad','Dosis de radiación (mGy)',0,30000,null,4999),sel('hemos','Hemostasia',['Compresión','Dispositivo','Otra']),sel('pulso','Pulso distal post',['Presente','Disminuido','Ausente'],['Disminuido','Ausente'])],
+ v1:['proc','acceso','contraste','hep','tca','mat','rad','hemos'],
+ c:['Alergia a contraste verificada','Función renal revisada','Consentimiento firmado','Pulsos distales valorados post-procedimiento','Sitio de punción sin sangrado','Material y lotes registrados']},
+hd:{n:'Hemodiálisis',f:[num('ppre','Peso pre (kg)',1,300),num('ppost','Peso post (kg)',1,300),num('ufp','UF programada (ml)',0,10000,null,null,1),num('qb','Flujo sanguíneo (ml/min)',0,600,null,null,1),sel('acceso','Acceso',['Fístula','Catéter','Injerto']),ta('tapre','TA pre'),ta('tapost','TA post'),num('dur','Duración (h)',0,12),area('inc','Incidentes')],
+ v1:['ppre','ppost','ufp','qb','acceso','tapre','tapost','dur','inc'],
+ calc:function(v){if(v.ppre===''||v.ppost===''||v.ppre==null||v.ppost==null)return[];var uf=Math.round((+v.ppre-+v.ppost)*1000),o=[['UF real',uf+' ml']];if(v.ufp!==''&&v.ufp!=null)o.push(['Dif. vs programada',(uf-+v.ufp)+' ml']);return o},
+ c:['Máquina desinfectada y probada','Prueba de agua / dializado','Acceso valorado','Heparina indicada','Filtro y líneas verificados','Hemostasia del acceso al finalizar']},
+urg:{n:'Urgencias',f:[sel('triage','Triage',['Rojo','Naranja','Amarillo','Verde','Azul']),txt('motivo','Motivo de consulta'),tm('hing','Hora de ingreso'),num('fc','FC (lpm)',20,250,50,120,1),ta('ta','TA (mmHg)'),num('spo2','SpO₂ (%)',0,100,90,null,1),num('temp','Temp (°C)',30,45,35.5,38.2),num('dolor','Dolor (0-10)',0,10,null,6,1),sel('destino','Destino',['En observación','Alta','Hospitalización','Quirófano','UCI','Traslado'])],
+ v1:['triage','motivo','hing','fc','ta','spo2','temp','dolor','destino'],
+ c:['Triage aplicado en tiempo','Brazalete de identificación','Riesgo de caídas valorado','Alergias preguntadas','Medicamentos registrados con hora']},
+ceye:{n:'Esterilización (CEYE)',f:[txt('equipo','Equipo (autoclave)'),txt('ciclo','Ciclo No.'),num('temp','Temperatura (°C)',0,200),num('tiempo','Tiempo (min)',0,240,null,null,1),txt('lote','Lote'),num('paq','Paquetes procesados',0,10000,null,null,1),sel('iq','Indicador químico',['Conforme','No conforme'],['No conforme']),sel('ib','Indicador biológico',['Negativo','Positivo','Pendiente'],['Positivo']),txt('solic','Área solicitante')],
+ v1:['equipo','ciclo','temp','tiempo','lote','paq','iq','ib','solic'],
+ x:function(v){if(v.ib==='Positivo'||v.iq==='No conforme')return['NO LIBERAR CARGA'];if(v.ib==='Pendiente')return['Liberación condicionada: biológico pendiente'];return[]},
+ c:['Descontaminación y lavado previo','Empaque íntegro y rotulado','Carga correcta del equipo','Indicadores revisados antes de liberar','Almacenamiento y caducidad','Bitácora firmada']}
+};
+
+/* ---------- Almacenamiento ---------- */
+var K='enf_v2',KP='enf_pref',cur='uci',D={},P={},drafts={},editing=null;
+function load(k,d){try{var x=JSON.parse(localStorage.getItem(k)||'null');return x==null?d:x}catch(e){return d}}
+function save(){try{localStorage.setItem(K,JSON.stringify(D));return true}catch(e){toast('No se pudo guardar en este navegador (¿modo privado o sin espacio?)');return false}}
+function savePref(){try{localStorage.setItem(KP,JSON.stringify(P))}catch(e){}}
+D=load(K,{});P=load(KP,{});if(P.area&&A[P.area])cur=P.area;
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function rows(k){return D[k]=D[k]||[]}
+
+// Convierte la fecha de texto de la v1 ("14/11/2026, 10:37:12 a.m.") a ISO
+function parseOld(s){var m=/(\d{1,2})\/(\d{1,2})\/(\d{4}),?\s*(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([ap])?/i.exec(s||'');if(!m)return null;var h=+m[4];if(m[7]){var pm=m[7].toLowerCase()==='p';if(pm&&h<12)h+=12;if(!pm&&h===12)h=0}var d=new Date(+m[3],+m[2]-1,+m[1],h,+m[5],+(m[6]||0));return isNaN(d)?null:d.toISOString()}
+// Migra registros de la versión anterior (valores por posición) a la nueva (valores por nombre)
+(function migrate(){var old=load('enf_v1',null);if(!old||localStorage.getItem('enf_v1_migrado'))return;var n=0;
+ Object.keys(old).forEach(function(ak){var a=A[ak];if(!a||!Array.isArray(old[ak]))return;
+  old[ak].forEach(function(x){var v={},k={};(x.v||[]).forEach(function(val,i){if(a.v1[i])v[a.v1[i]]=val});(x.k||[]).forEach(function(b,i){if(a.c[i])k[a.c[i]]=!!b});
+   rows(ak).push({id:uid(),ts:parseOld(x.d),legacy:x.d||'',p:x.p||'',c:x.c||'',t:x.t||'',e:x.e||'',o:x.o||'',v:v,k:k,mod:[],anul:null});n++})});
+ if(save()){try{localStorage.setItem('enf_v1_migrado','1')}catch(e){}if(n)setTimeout(function(){toast(n+' registros de la versión anterior migrados')},400)}})();
+
+/* ---------- Utilidades ---------- */
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function fdate(r){if(!r.ts)return r.legacy||'—';return new Date(r.ts).toLocaleString('es-MX',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function turnoAuto(){var h=new Date().getHours();return h>=7&&h<14?'Matutino':h>=14&&h<21?'Vespertino':'Nocturno'}
+var tt;function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show')},2800)}
+function download(name,content,type){var u=URL.createObjectURL(new Blob([content],{type:type})),l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)}
+function stamp(){var d=new Date(),p=function(n){return('0'+n).slice(-2)};return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes())}
+
+function alertas(a,v){var out=[];a.f.forEach(function(f){var x=v[f.k];if(x===''||x==null)return;
+  if(f.t==='number'){var n=+x;if(isNaN(n))return;if(f.lo!=null&&n<f.lo)out.push(f.l+' '+x+' ↓');else if(f.hi!=null&&n>f.hi)out.push(f.l+' '+x+' ↑')}
+  else if(f.t==='ta'){var m=/^(\d{2,3})\/(\d{2,3})$/.exec(x);if(m){var s=+m[1],d=+m[2];if(s<90)out.push(f.l+' '+x+' ↓');else if(s>=180||d>=110)out.push(f.l+' '+x+' ↑')}}
+  else if(f.t==='select'&&f.bad.indexOf(x)>=0)out.push(f.l+': '+x)});
+ return a.x?a.x(v).concat(out):out}
+function ckCount(a,r){return a.c.filter(function(c){return r.k&&r.k[c]}).length}
+
+/* ---------- Pestañas y estadísticas ---------- */
+function isToday(r){if(!r.ts)return false;var d=new Date(r.ts),n=new Date();return d.toDateString()===n.toDateString()}
+function tabs(){$('tabs').innerHTML=Object.keys(A).map(function(k){return'<button type="button" class="'+(k===cur?'on':'')+'" data-k="'+k+'"'+(k===cur?' aria-current="true"':'')+'>'+esc(A[k].n)+'</button>'}).join('')}
+function stats(){$('stats').innerHTML=Object.keys(A).map(function(k){var r=rows(k).filter(function(x){return!x.anul&&isToday(x)}),al=r.filter(function(x){return alertas(A[k],x.v).length}).length;
+ return'<button type="button" class="stat'+(k===cur?' on':'')+'" data-k="'+k+'"><b>'+r.length+'</b><small>'+esc(A[k].n)+'</small><span class="al">'+(al?al+' con alerta':'')+'</span></button>'}).join('')}
+function go(k){if(!A[k]||k===cur)return;if(editing){if(!confirm('Hay una edición sin guardar. ¿Descartarla?'))return;stopEdit(true)}else drafts[cur]=snap();cur=k;P.area=k;savePref();form();fill(drafts[cur]||defaults());render();window.scrollTo(0,0)}
+$('tabs').onclick=$('stats').onclick=function(e){var b=e.target.closest('[data-k]');if(b)go(b.dataset.k)};
+
+/* ---------- Formulario ---------- */
+var F=$('f');
+function form(){var a=A[cur];$('ft').innerHTML='Nuevo registro · <span class="gd">'+esc(a.n)+'</span>';
+ var h='<div><label for="i_p">Paciente (iniciales o folio)</label><input id="i_p" name="_p" required maxlength="40"></div>'+
+  '<div><label for="i_c">Cama / sala</label><input id="i_c" name="_c" maxlength="20"></div>'+
+  '<div><label for="i_t">Turno</label><select id="i_t" name="_t"><option>Matutino</option><option>Vespertino</option><option>Nocturno</option></select></div>'+
+  '<div class="full"><label for="i_e" id="l_e">Enfermero/a responsable</label><input id="i_e" name="_e" required maxlength="80"></div>';
+ a.f.forEach(function(f){var id='i_'+f.k,nm='f_'+f.k,l='<label for="'+id+'">'+esc(f.l)+'</label>';
+  if(f.t==='select')h+='<div>'+l+'<select id="'+id+'" name="'+nm+'"><option value="">—</option>'+f.o.map(function(o){return'<option>'+esc(o)+'</option>'}).join('')+'</select></div>';
+  else if(f.t==='textarea')h+='<div class="full">'+l+'<textarea id="'+id+'" name="'+nm+'" rows="2"></textarea></div>';
+  else if(f.t==='ta')h+='<div>'+l+'<input id="'+id+'" name="'+nm+'" inputmode="numeric" pattern="\\d{2,3}/\\d{2,3}" placeholder="120/80" title="Formato: sistólica/diastólica, p. ej. 120/80"></div>';
+  else if(f.t==='number')h+='<div>'+l+'<input id="'+id+'" name="'+nm+'" type="number" inputmode="decimal" step="'+f.step+'" min="'+f.min+'" max="'+f.max+'" placeholder="'+f.min+'–'+f.max+'" title="Rango permitido: '+f.min+' a '+f.max+'"></div>';
+  else h+='<div>'+l+'<input id="'+id+'" name="'+nm+'" type="'+(f.t==='time'?'time':'text')+'"></div>'});
+ h+='<div class="full"><label for="i_o">Observaciones</label><textarea id="i_o" name="_o" rows="2"></textarea></div>';
+ $('fields').innerHTML=h;
+ $('ck').innerHTML=a.c.map(function(c,i){return'<label class="ck"><input type="checkbox" name="k'+i+'"> '+esc(c)+'</label>'}).join('');
+ F.classList.remove('editing');$('sb').textContent='Guardar registro';$('cancel').hidden=true;$('l_e').textContent='Enfermero/a responsable'}
+function snap(){var o={};Array.prototype.forEach.call(F.elements,function(el){if(el.name)o[el.name]=el.type==='checkbox'?el.checked:el.value});return o}
+function fill(o){Array.prototype.forEach.call(F.elements,function(el){if(!el.name||!(el.name in o))return;if(el.type==='checkbox')el.checked=!!o[el.name];else el.value=o[el.name]==null?'':o[el.name]})}
+function defaults(){return{_e:P.e||'',_t:turnoAuto()}}
+function findRec(id){return rows(cur).filter(function(r){return r.id===id})[0]}
+
+function startEdit(id){var r=findRec(id),a=A[cur];if(!r||r.anul)return;if(!editing)drafts[cur]=snap();editing=id;form();
+ var o={_p:r.p,_c:r.c,_t:r.t,_e:P.e||'',_o:r.o};a.f.forEach(function(f){o['f_'+f.k]=r.v[f.k]==null?'':r.v[f.k]});a.c.forEach(function(c,i){o['k'+i]=!!(r.k&&r.k[c])});fill(o);
+ F.classList.add('editing');$('eb').textContent='Editando registro de '+r.p+' ('+fdate(r)+'), capturado por '+r.e+'. Los cambios quedan registrados.';
+ $('ft').innerHTML='Corregir registro · <span class="gd">'+esc(a.n)+'</span>';$('l_e').textContent='Quién corrige';$('sb').textContent='Guardar cambios';$('cancel').hidden=false;F.scrollIntoView({behavior:'smooth'})}
+function stopEdit(silent){editing=null;form();fill(drafts[cur]||defaults());if(!silent)toast('Edición cancelada')}
+$('cancel').onclick=function(){stopEdit()};
+$('limpiar').onclick=function(){if(editing){stopEdit();return}drafts[cur]=null;form();fill(defaults())};
+
+F.onsubmit=function(ev){ev.preventDefault();var o=snap(),a=A[cur],v={},k={};
+ a.f.forEach(function(f){v[f.k]=String(o['f_'+f.k]||'').trim()});a.c.forEach(function(c,i){k[c]=!!o['k'+i]});
+ var b={p:o._p.trim(),c:o._c.trim(),t:o._t,o:o._o.trim(),v:v,k:k},quien=o._e.trim();
+ if(!b.p||!quien){toast('Faltan paciente o enfermero/a');return}
+ if(editing){var r=findRec(editing),ch=[];
+  ['p','c','t','o'].forEach(function(x){if((r[x]||'')!==b[x])ch.push({p:'Paciente',c:'Cama',t:'Turno',o:'Observaciones'}[x])});
+  a.f.forEach(function(f){if(String(r.v[f.k]==null?'':r.v[f.k])!==v[f.k])ch.push(f.l)});
+  a.c.forEach(function(c){if(!!(r.k&&r.k[c])!==k[c])ch.push('Checklist: '+c)});
+  if(!ch.length){toast('Sin cambios');stopEdit(true);return}
+  r.p=b.p;r.c=b.c;r.t=b.t;r.o=b.o;r.v=v;r.k=k;(r.mod=r.mod||[]).push({ts:new Date().toISOString(),por:quien,campos:ch});
+  P.e=quien;savePref();if(save()){editing=null;form();fill(drafts[cur]||defaults());render();toast('Cambios guardados')}return}
+ b.id=uid();b.ts=new Date().toISOString();b.e=quien;b.mod=[];b.anul=null;rows(cur).push(b);
+ P.e=quien;savePref();
+ if(save()){var al=alertas(a,v),pend=a.c.length-ckCount(a,b);drafts[cur]=null;form();fill(defaults());render();window.scrollTo(0,0);
+  toast(al.length?'Guardado con '+al.length+' alerta(s): revisar':pend?'Guardado · checklist incompleto ('+pend+' pendiente/s)':'Registro guardado')}};
+
+/* ---------- Lista ---------- */
+function filtered(){var p=$('fp').value,tu=$('fturn').value,q=$('fq').value.trim().toLowerCase(),now=Date.now();
+ return rows(cur).filter(function(r){
+  if(p==='hoy'&&!isToday(r))return false;
+  if(p!=='hoy'&&p!=='todo'&&(!r.ts||now-new Date(r.ts)>+p*864e5))return false;
+  if(tu&&r.t!==tu)return false;
+  if(q&&(r.p+' '+r.c+' '+r.e).toLowerCase().indexOf(q)<0)return false;return true})
+ .sort(function(x,y){return(y.ts||'').localeCompare(x.ts||'')})}
+function recHTML(r){var a=A[cur],ok=ckCount(a,r),tot=a.c.length,al=alertas(a,r.v),h='';
+ h+='<div class="rec'+(r.anul?' an':'')+'"><b class="nm">'+esc(r.p)+'</b> · cama '+esc(r.c||'—')+' <span class="mu">'+esc(r.t)+' · '+esc(fdate(r))+'</span><br>';
+ if(r.anul)h+='<span class="tag er">ANULADO</span> ';
+ if(r.v.triage)h+='<span class="tag tri-'+esc(r.v.triage)+'">Triage '+esc(r.v.triage)+'</span>';
+ h+='<span class="tag '+(ok===tot?'ok':'no')+'">Checklist '+ok+'/'+tot+'</span>';
+ al.forEach(function(x){h+='<span class="tag er">⚠ '+esc(x)+'</span>'});
+ a.f.forEach(function(f){var x=r.v[f.k];if(x!==''&&x!=null&&f.k!=='triage')h+='<span class="tag">'+esc(f.l)+': '+esc(x)+'</span>'});
+ if(a.calc)a.calc(r.v).forEach(function(c){h+='<span class="tag calc">'+esc(c[0])+': '+esc(c[1])+'</span>'});
+ if(ok<tot)h+='<br><span class="mu" style="font-size:12px">Pendiente: '+esc(a.c.filter(function(c){return!(r.k&&r.k[c])}).join(' · '))+'</span>';
+ if(r.o)h+='<br><span class="mu">'+esc(r.o)+'</span>';
+ h+='<br><small class="mu">Por '+esc(r.e);
+ if(r.mod&&r.mod.length){var m=r.mod[r.mod.length-1];h+=' · corregido '+(r.mod.length===1?'1 vez':r.mod.length+' veces')+' (último: '+esc(m.por)+', '+esc(fdate({ts:m.ts}))+')'}
+ h+='</small>';
+ if(r.anul)h+='<br><small style="color:var(--er)">Anulado por '+esc(r.anul.por)+' el '+esc(fdate({ts:r.anul.ts}))+': '+esc(r.anul.motivo)+'</small>';
+ else h+='<div class="ra noprint"><button type="button" class="btn s" data-a="edit" data-id="'+r.id+'">Corregir</button><button type="button" class="btn d" data-a="anul" data-id="'+r.id+'">Anular</button></div>';
+ return h+'</div>'}
+function render(){tabs();stats();var a=A[cur],r=filtered(),total=rows(cur).length;$('lt').textContent=a.n;
+ $('cnt').textContent=r.length+' de '+total+' registro(s) en '+a.n;
+ $('list').innerHTML=r.length?r.map(recHTML).join(''):'<p class="mu">'+(total?'Sin registros con estos filtros.':'Sin registros en esta área.')+'</p>';
+ var fpTxt=$('fp').options[$('fp').selectedIndex].text,tu=$('fturn').value;
+ $('ph').innerHTML='<b>Grupo Saint Luke\'s Hospitals · Registros de Enfermería</b><br>Área: '+esc(a.n)+' · Periodo: '+esc(fpTxt)+(tu?' · Turno: '+esc(tu):'')+' · Impreso: '+esc(new Date().toLocaleString('es-MX'))}
+['fp','fturn'].forEach(function(id){$(id).onchange=render});$('fq').oninput=render;
+
+$('list').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;var id=b.dataset.id;
+ if(b.dataset.a==='edit')startEdit(id);else if(b.dataset.a==='anul')openAnul(id)};
+
+/* ---------- Anulación ---------- */
+var anulId=null,dlg=$('dlg');
+function openAnul(id){var r=findRec(id);if(!r)return;anulId=id;$('dtx').textContent=r.p+' · '+fdate(r)+'. El registro no se borra: queda marcado como anulado con el motivo.';$('dm').value='';$('dp').value=P.e||'';
+ if(dlg.showModal)dlg.showModal();else{var m=prompt('Motivo de anulación:');if(m)doAnul(m,P.e||'—')}}
+dlg.addEventListener('close',function(){if(dlg.returnValue==='ok'&&anulId)doAnul($('dm').value.trim(),$('dp').value.trim());anulId=null});
+function doAnul(m,por){var r=findRec(anulId);if(!r||!m||!por)return;r.anul={ts:new Date().toISOString(),por:por,motivo:m};if(save()){render();toast('Registro anulado')}}
+
+/* ---------- Exportar / imprimir ---------- */
+function cell(c){var s=String(c==null?'':c);if(/^[=+\-@\t\r]/.test(s)&&!/^-?\d+(\.\d+)?$/.test(s))s="'"+s;return'"'+s.replace(/"/g,'""')+'"'}
+$('csv').onclick=function(){var a=A[cur],r=filtered();if(!r.length){toast('No hay registros para exportar con estos filtros');return}
+ var calcL=[];r.forEach(function(x){if(a.calc)a.calc(x.v).forEach(function(c){if(calcL.indexOf(c[0])<0)calcL.push(c[0])})});
+ var out=[['ID','Fecha','Turno','Paciente','Cama','Enfermero/a'].concat(a.f.map(function(f){return f.l}),calcL,a.c,['Checklist completo','Alertas','Observaciones','Estado','Motivo anulación','Correcciones'])];
+ r.forEach(function(x){var cv={};if(a.calc)a.calc(x.v).forEach(function(c){cv[c[0]]=c[1]});
+  out.push([x.id,x.ts?new Date(x.ts).toLocaleString('es-MX'):x.legacy,x.t,x.p,x.c,x.e]
+   .concat(a.f.map(function(f){return x.v[f.k]}),calcL.map(function(l){return cv[l]||''}),a.c.map(function(c){return x.k&&x.k[c]?'Sí':'No'}),
+   [ckCount(a,x)===a.c.length?'Sí':'No',alertas(a,x.v).join(' | '),x.o,x.anul?'Anulado':'Vigente',x.anul?x.anul.motivo+' ('+x.anul.por+')':'',(x.mod||[]).map(function(m){return m.por+' '+new Date(m.ts).toLocaleString('es-MX')+': '+m.campos.join(', ')}).join(' | ')]))});
+ download('enfermeria_'+cur+'_'+stamp()+'.csv','﻿'+out.map(function(l){return l.map(cell).join(',')}).join('\r\n'),'text/csv;charset=utf-8');toast('CSV exportado ('+r.length+' registros)')};
+$('prn').onclick=function(){render();window.print()};
+
+/* ---------- Respaldo ---------- */
+$('bk').onclick=function(){var n=0;for(var k in D)n+=D[k].length;if(!n){toast('No hay registros que respaldar');return}
+ download('respaldo_enfermeria_'+stamp()+'.json',JSON.stringify({app:'registros_enfermeria_slh',version:2,exportado:new Date().toISOString(),datos:D},null,1),'application/json');toast('Respaldo descargado ('+n+' registros)')};
+$('imp').onclick=function(){$('impf').click()};
+$('impf').onchange=function(){var f=this.files[0];this.value='';if(!f)return;var rd=new FileReader();
+ rd.onload=function(){try{var j=JSON.parse(rd.result),src=j&&j.datos;if(!src||typeof src!=='object')throw 0;var add=0,upd=0;
+  Object.keys(src).forEach(function(k){if(!A[k]||!Array.isArray(src[k]))return;var dst=rows(k);
+   src[k].forEach(function(r){if(!r||!r.id||typeof r.v!=='object')return;var i=-1;dst.forEach(function(x,j){if(x.id===r.id)i=j});
+    if(i<0){dst.push(r);add++}else{var a=dst[i],am=(a.mod||[]).length+(a.anul?1:0),bm=(r.mod||[]).length+(r.anul?1:0);if(bm>am){dst[i]=r;upd++}}})});
+  if(save()){render();toast('Importado: '+add+' nuevo(s), '+upd+' actualizado(s)')}}catch(e){toast('El archivo no es un respaldo válido')}};
+ rd.readAsText(f)};
+$('clr').onclick=function(){var a=A[cur],n=rows(cur).length;if(!n){toast('Esta área no tiene registros');return}
+ var t=prompt('Se borrarán definitivamente '+n+' registro(s) de '+a.n+'. Descarga antes un respaldo.\n\nEscribe BORRAR para confirmar:');
+ if(t&&t.trim().toUpperCase()==='BORRAR'){D[cur]=[];if(save()){render();toast('Registros de '+a.n+' borrados')}}};
+
+/* ---------- Inicio ---------- */
+form();fill(defaults());render();
+})();
+</script></body></html>
