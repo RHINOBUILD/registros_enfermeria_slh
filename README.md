@@ -1,41 +1,34 @@
-# Registros de Enfermería · Grupo Saint Luke's
+# Registros de Enfermería · Grupo Saint Luke's Hospitals
 
-Bitácoras y checklists de seguridad por área: **UCI, UCIN, Quirófano, Hemodinamia, Hemodiálisis, Urgencias y Esterilización (CEYE)**.
+Bitácoras clínicas y checklists de seguridad por área: **UCI, UCIN, Quirófano, Hemodinamia, Hemodiálisis, Urgencias y Esterilización (CEYE)**.
 
-Este repositorio tiene dos versiones:
-
-| Versión | Dónde | Para qué |
+| | Liga | Para qué |
 |---|---|---|
-| **Institucional (v3)** | carpeta [`apps-script/`](apps-script/) | Uso real: cada quien entra con su cuenta de Google, datos en Google Sheets, roles y bitácora. Ver la [guía de despliegue](apps-script/README.md). |
-| **Prototipo (v2)** | `index.html` · [rhinobuild.github.io/registros_enfermeria_slh](https://rhinobuild.github.io/registros_enfermeria_slh/) | Demostración y capacitación. Los datos se quedan en el navegador. |
+| **Plataforma oficial** | [Entrar](https://script.google.com/macros/s/AKfycbxmRvy99heCvbfrCxpTiSgQF218wLszBbR2nBKpNYQxlOvHklefaNLbeicbyR0Zh24/exec) | Uso real. Cada quien entra con su cuenta de Google; datos en Google Sheets con roles y bitácora. |
+| **Demostración** | [rhinobuild.github.io/registros_enfermeria_slh](https://rhinobuild.github.io/registros_enfermeria_slh/) | Capacitación y pruebas. Misma interfaz y lógica, datos solo en el navegador; permite cambiar entre Enfermería, Jefatura y Admin. |
 
----
+## Estructura
 
-## Prototipo (v2)
-
-- Un solo archivo: `index.html` (sin dependencias, funciona en celular y computadora).
-- Los datos se guardan **solo en el navegador** del equipo donde se capturan (localStorage).
-- **No capturar datos reales de pacientes.** Usa iniciales o un folio ficticio. No sustituye el expediente clínico electrónico (NOM-004-SSA3 / NOM-024-SSA3).
-
-## Qué hace (v2.0)
-
-| Función | Detalle |
+| Carpeta / archivo | Contenido |
 |---|---|
-| Captura por área | Campos específicos de cada servicio + checklist de seguridad |
-| Validación de rangos | No acepta valores imposibles (SpO₂ > 100, Glasgow > 15, RASS fuera de −5 a +4, TA sin formato `120/80`, etc.) |
-| Alertas clínicas | Marca en rojo signos fuera de rango, conteo de gasas/instrumental incorrecto, pulso distal disminuido, dosis de radiación ≥ 5000 mGy, y en CEYE **NO LIBERAR CARGA** si el biológico es positivo o el químico no conforme |
-| Cálculos | Duración de cirugía (incluso si pasa de medianoche) y UF real en hemodiálisis |
-| Corregir registro | Guarda quién corrigió, cuándo y qué campos cambió |
-| Anular registro | No se borra: queda marcado con motivo, quién y cuándo |
-| Filtros | Hoy / 7 días / 30 días / todo, por turno y búsqueda por paciente, cama o enfermero/a |
-| Exportar CSV | Respeta los filtros; incluye alertas, estado, correcciones; protegido contra fórmulas maliciosas en Excel |
-| Imprimir | Encabezado institucional y líneas de firma (Elaboró / Revisó) |
-| Respaldo | Descarga e importación `.json` de todas las áreas (para cambiar de equipo o no perder datos) |
-| Comodidades | Recuerda al enfermero/a, propone el turno según la hora, conserva lo capturado al cambiar de pestaña |
+| [`apps-script/`](apps-script/) | **Código fuente oficial** (Apps Script): `Config.gs`, `Code.gs`, `Index.html`, `appsscript.json` y la [guía de despliegue](apps-script/README.md). |
+| `index.html` | Demo de GitHub Pages. **Se genera** con `python3 tools/build_demo.py`; no se edita a mano. |
+| `tools/` | `build_demo.py` (genera la demo) y `demo_shim.js` (simula Google Sheets en el navegador). |
 
-Si en el navegador había datos de la versión anterior (v1), se migran automáticamente al abrir la v2.
+### Flujo para cambios
+1. Edita los archivos de `apps-script/`.
+2. Ejecuta `python3 tools/build_demo.py` para regenerar la demo y súbelo a GitHub.
+3. Copia los archivos cambiados al proyecto de Apps Script → **Implementar → Administrar implementaciones → ✏️ → Nueva versión**. La URL oficial no cambia.
 
-## Rangos de alerta usados
+## Funciones
+- Captura por área con campos clínicos específicos y checklist de seguridad.
+- **Alertas en vivo** mientras se captura: signos fuera de rango, conteo de gasas/instrumental incorrecto, pulso distal ausente, dosis de radiación alta y, en CEYE, **NO LIBERAR CARGA** si el indicador biológico sale positivo.
+- Validación también en el servidor (rangos, formatos, opciones).
+- **Roles**: Enfermería (captura y corrige lo suyo 12 h), Jefatura (corrige y anula con motivo), Admin (todo + importación).
+- **Nada se borra**: correcciones con versión y bitácora antes → después; anulaciones con motivo, autor y fecha.
+- Indicadores del día por área, filtros por periodo/turno/búsqueda, exportación CSV e impresión con encabezado institucional y firmas.
+
+## Umbrales de alerta
 
 | Parámetro | Alerta si |
 |---|---|
@@ -53,18 +46,13 @@ Si en el navegador había datos de la versión anterior (v1), se migran automát
 | Diuresis neonato | < 1 ml/kg/h |
 | Dolor | ≥ 7 |
 | Sangrado quirúrgico | > 1000 ml |
+| Dosis de radiación | ≥ 5000 mGy |
 
-Los umbrales están en `index.html`, en la definición de cada área (`num(clave, etiqueta, mín, máx, alertaBajo, alertaAlto)`). Ajústalos con la Jefatura de Enfermería antes de usar la herramienta.
+Se ajustan en `apps-script/Config.gs`. Conviene validarlos con la Jefatura de Enfermería.
 
-## Publicar con GitHub Pages
-1. Repositorio → **Settings → Pages**.
-2. **Source:** Deploy from a branch → `main` → carpeta `/ (root)` → Save.
-3. Sitio en `https://rhinobuild.github.io/registros_enfermeria_slh/`.
-
-## Limitaciones (prototipo)
-- Sin inicio de sesión: el nombre del enfermero/a es texto libre.
-- Cada navegador tiene sus propios datos; en equipos compartidos cualquiera que lo abra los ve.
-- Para uso real, usa la versión institucional de [`apps-script/`](apps-script/). Los respaldos `.json` del prototipo se pueden importar ahí.
+## Consideraciones
+- No sustituye el expediente clínico electrónico certificado (NOM-004-SSA3 / NOM-024-SSA3); es bitácora operativa y checklist de seguridad.
+- La hoja de cálculo contiene datos de salud: no se comparte con el personal; la app trabaja por ellos.
 
 ---
 Creado por RHINOBUILD
