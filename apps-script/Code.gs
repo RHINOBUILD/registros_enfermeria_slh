@@ -329,7 +329,7 @@ function api_guardar(area, rec) {
     }
     SpreadsheetApp.flush();
     var nueva = h.getRange(filaN, 1, 1, enc.length).getValues()[0];
-    return { registro: decorar_(a, deFila_(a, ix, nueva), u) };
+    return { registro: decorar_(a, deFila_(a, ix, nueva), u), resumen: api_resumen_(u) };
   });
 }
 
@@ -348,7 +348,7 @@ function api_anular(area, id, motivo) {
     h.getRange(filaN, 1, 1, enc.length).setValues([fila_(enc, { 'Estado': 'Anulado', 'Anulado por': u.nombre, 'Fecha anulación': new Date(), 'Motivo anulación': motivo }, prev)]);
     bitacora_(ss, u, 'Anulación', area, id, motivo);
     SpreadsheetApp.flush();
-    return { registro: decorar_(a, deFila_(a, ix, h.getRange(filaN, 1, 1, enc.length).getValues()[0]), u) };
+    return { registro: decorar_(a, deFila_(a, ix, h.getRange(filaN, 1, 1, enc.length).getValues()[0]), u), resumen: api_resumen_(u) };
   });
 }
 

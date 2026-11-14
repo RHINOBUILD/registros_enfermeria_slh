@@ -270,7 +270,7 @@ dialog::backdrop{background:rgba(7,26,51,.55);backdrop-filter:blur(3px)}
   <div class="brand"><div class="mark">SL</div><div><div class="wm">SAINT LUKE'S</div><div class="ws">HOSPITALS</div></div></div>
   <div class="side-t">Registros de Enfermería</div>
   <nav id="nav" aria-label="Áreas"></nav>
-  <div class="side-f"><div class="uc"><div class="av" id="av1"></div><div><div class="n" id="un"></div><div class="r" id="ur"></div></div></div><small>Creado por RHINOBUILD · v3.1</small></div>
+  <div class="side-f"><div class="uc"><div class="av" id="av1"></div><div><div class="n" id="un"></div><div class="r" id="ur"></div></div></div><small>Creado por RHINOBUILD · v3.2</small></div>
  </aside>
 
  <div class="main">
@@ -419,7 +419,7 @@ function kpis(){var a=AD[cur],r=RES[cur]||{hoy:0,alertas:0},vig=REC.filter(funct
  var k=[['clip','',r.hoy,'Registros hoy'],['alert','r',r.alertas,'Con alerta hoy'],['shield','g',vig.length?pct+'%':'—','Checklist completo'],['list','a',REC.length,'Registros en la vista']];
  $('kpis').innerHTML=k.map(function(x){return'<div class="kpi"><div class="ic '+x[1]+'">'+ic(x[0])+'</div><div><b>'+x[2]+'</b><span>'+x[3]+'</span></div></div>'}).join('')}
 function stats(res){if(res)RES=res;nav();kpis()}
-function refreshStats(){call('api_resumen').then(stats).catch(function(){})}
+function refreshStats(n){call('api_resumen').then(stats).catch(function(){if(!n)setTimeout(function(){refreshStats(1)},1500)})}
 function go(k){if(!AD[k]||k===cur)return;if(editing){if(!confirm('Hay una corrección sin guardar. ¿Descartarla?'))return;stopEdit(true)}else drafts[cur]=snap();
  cur=k;pref('area',k);REC=[];form();fill(drafts[cur]||defaults());stats();listar();window.scrollTo(0,0)}
 $('nav').onclick=$('tabs').onclick=function(e){var b=e.target.closest('[data-k]');if(b)go(b.dataset.k)};
@@ -477,7 +477,7 @@ F.onsubmit=function(ev){ev.preventDefault();if(busy)return;
   var r=res.registro,pend=a.c.length-ckCount(a,r),fue=!!rec.id;
   editing=null;drafts[area]=null;if(cur===area){form();fill(defaults())}
   toast(fue?'Corrección guardada':r.alertas.length?'Guardado con '+r.alertas.length+' alerta(s): revisar':pend?'Guardado · checklist incompleto ('+pend+' pendiente/s)':'Registro guardado',!fue&&r.alertas.length>0);
-  listar();refreshStats();if(!fue)window.scrollTo({top:0,behavior:'smooth'})})
+  if(res.resumen)stats(res.resumen);else refreshStats();listar();if(!fue)window.scrollTo({top:0,behavior:'smooth'})})
  .catch(function(e){busy=false;$('sb').disabled=false;$('sb').innerHTML=ic('save')+(editing?'Guardar corrección':'Guardar registro');toast(msg(e),true)})};
 
 /* ---------- Lista ---------- */
@@ -521,7 +521,7 @@ var anulId=null,dlg=$('dlg');
 function openAnul(id){var r=findRec(id);if(!r)return;anulId=id;$('dtx').textContent=r.p+' · '+fdate(r.fecha)+'. El registro no se borra: queda marcado como anulado, con el motivo, en la hoja y en la bitácora.';$('dm').value='';
  if(dlg.showModal)dlg.showModal();else{var m=prompt('Motivo de anulación:');if(m)doAnul(m)}}
 dlg.addEventListener('close',function(){if(dlg.returnValue==='ok'&&anulId)doAnul($('dm').value.trim());anulId=null});
-function doAnul(m){var id=anulId,area=cur;call('api_anular',area,id,m).then(function(){toast('Registro anulado');listar();refreshStats()}).catch(function(e){toast(msg(e),true)})}
+function doAnul(m){var id=anulId,area=cur;call('api_anular',area,id,m).then(function(res){toast('Registro anulado');if(res&&res.resumen)stats(res.resumen);else refreshStats();listar()}).catch(function(e){toast(msg(e),true)})}
 
 /* ---------- CSV / imprimir ---------- */
 function cell(c){var s=String(c==null?'':c);if(/^[=+\-@\t\r]/.test(s)&&!/^-?\d+(\.\d+)?$/.test(s))s="'"+s;return'"'+s.replace(/"/g,'""')+'"'}
