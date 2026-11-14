@@ -217,10 +217,10 @@ $('tabs').onclick=$('stats').onclick=function(e){var b=e.target.closest('[data-k
 /* ---------- Formulario ---------- */
 var F=$('f');
 function form(){var a=A[cur];$('ft').innerHTML='Nuevo registro · <span class="gd">'+esc(a.n)+'</span>';
- var h='<div><label for="i_p">Paciente (iniciales o folio)</label><input id="i_p" name="_p" required maxlength="40"></div>'+
+ var h='<div><label for="i_p">Paciente (iniciales o folio)</label><input id="i_p" name="_p" required maxlength="40" placeholder="Ej. JPR o F-0123"></div>'+
   '<div><label for="i_c">Cama / sala</label><input id="i_c" name="_c" maxlength="20"></div>'+
   '<div><label for="i_t">Turno</label><select id="i_t" name="_t"><option>Matutino</option><option>Vespertino</option><option>Nocturno</option></select></div>'+
-  '<div class="full"><label for="i_e" id="l_e">Enfermero/a responsable</label><input id="i_e" name="_e" required maxlength="80"></div>';
+  '<div class="full"><label for="i_e" id="l_e">Enfermero/a responsable</label><input id="i_e" name="_e" required maxlength="80" placeholder="Nombre y apellido"></div>';
  a.f.forEach(function(f){var id='i_'+f.k,nm='f_'+f.k,l='<label for="'+id+'">'+esc(f.l)+'</label>';
   if(f.t==='select')h+='<div>'+l+'<select id="'+id+'" name="'+nm+'"><option value="">—</option>'+f.o.map(function(o){return'<option>'+esc(o)+'</option>'}).join('')+'</select></div>';
   else if(f.t==='textarea')h+='<div class="full">'+l+'<textarea id="'+id+'" name="'+nm+'" rows="2"></textarea></div>';
