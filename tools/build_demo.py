@@ -69,6 +69,9 @@ html = html.replace('</head>', CSS + '</head>', 1)
 html = html.replace('<body>', '<body>' + BAR, 1)
 html = html.replace(marca_script, boot + marca_script, 1)
 html = html.replace('<base target="_top">', '', 1)
+import base64
+fav = base64.b64encode((RAIZ / 'tools/logo_slh_navy.png').read_bytes()).decode()
+html = html.replace('</title>', '</title>\n<link rel="icon" type="image/png" href="data:image/png;base64,' + fav + '">', 1)
 html = html.replace('<title>Registros de Enfermería · Grupo Saint Luke\'s</title>', '<title>Registros de Enfermería · Demo · Grupo Saint Luke\'s</title>', 1)
 
 (RAIZ / 'index.html').write_text('<!-- Generado por tools/build_demo.py a partir de apps-script/. No editar a mano. -->\n' + html, encoding='utf-8')
